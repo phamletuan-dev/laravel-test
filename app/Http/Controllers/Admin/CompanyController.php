@@ -123,15 +123,15 @@ class CompanyController extends Controller
             }
 
             $company->update([
-                'name' => $request->name,
-                'email' => $request->email,
+                'name' => $request->name ? $request->name : $company->name,
+                'email' => $request->email ? $request->email : $company->email,
                 'logo' => $logopath ? config('filesystems.disks.public.url') . $logopath : $company->logo,
-                'website' => $request->website
+                'website' => $request->website ? $request->website : $company->website
             ]);
 
             DB::commit();
 
-            return ApiHelper::apiResponse(Constants::HTTP_RESPONSE_SUCCESSFULLY, 'Create Company Successfully!', $company);
+            return ApiHelper::apiResponse(Constants::HTTP_RESPONSE_SUCCESSFULLY, 'Update Company Successfully!', $company);
         } catch (\Exception $e) {
             DB::rollback();
             Log::info($e);

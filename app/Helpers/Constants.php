@@ -8,6 +8,7 @@ class Constants
 
     public const HTTP_RESPONSE_SOMETHING_WENT_WRONG = 502;
     public const HTTP_RESPONSE_SUCCESSFULLY = 200;
+    public const HTTP_RESPONSE_NOT_FOUND = 404;
 
     public const DEFAULT_PER_PAGE = 10;
 }

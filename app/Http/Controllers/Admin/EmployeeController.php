@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EmployeeRequest;
 use Illuminate\Http\Request;
 use App\Helpers\ApiHelper;
 use App\Helpers\Constants;
 use App\Models\Employee;
+use App\Models\Company;
+
 class EmployeeController extends Controller
 {
     /**
@@ -35,9 +38,21 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmployeeRequest $request)
     {
-        //
+        if (Company::where('id', $request->company_id )->exists()) {
+            return ApiHelper::apiResponse(Constants::HTTP_RESPONSE_NOT_FOUND, 'Company not found!', null);
+        }
+
+        $employee = Employee::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'company_id' => $request->company_id,
+            'email' => $request->email,
+            'phone' => $request->phone,
+        ]);
+
+        return ApiHelper::apiResponse(Constants::HTTP_RESPONSE_SUCCESSFULLY, 'Create Employee Successfully!', $employee);
     }
 
     /**
@@ -46,9 +61,9 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Employee $employee)
     {
-        //
+        return ApiHelper::apiResponse(Constants::HTTP_RESPONSE_SUCCESSFULLY, null, $employee);
     }
 
     /**
@@ -69,9 +84,15 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EmployeeRequest $request, Employee $employee)
     {
-        //
+        if (!Company::where('id', $request->company_id )->exists()) {
+            return ApiHelper::apiResponse(Constants::HTTP_RESPONSE_NOT_FOUND, 'Company not found!', null);
+        }
+
+        $employee = $employee->update($request->all());
+
+        return ApiHelper::apiResponse(Constants::HTTP_RESPONSE_SUCCESSFULLY, 'Update Employee Successfully!', $employee);
     }
 
     /**
@@ -80,8 +101,10 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Employee $employee)
     {
-        //
+        $employee->delete();
+
+        return ApiHelper::apiResponse(Constants::HTTP_RESPONSE_SUCCESSFULLY, 'Delete Employee Successfully!', null);
     }
 }
