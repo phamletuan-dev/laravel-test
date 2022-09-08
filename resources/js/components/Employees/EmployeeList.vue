@@ -26,7 +26,7 @@
           <label><strong>Phone:</strong></label> {{ currentEmployee.phone }}
         </div>
 
-        <router-link :to="'/company/' + currentEmployee.id" class="badge badge-warning">Edit</router-link>
+        <router-link :to="'/employee/' + currentEmployee.id" class="badge badge-warning">Edit</router-link>
       </div>
       <div v-else>
         <p>Please click on a Employee.</p>
