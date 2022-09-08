@@ -56,7 +56,6 @@
 
     <div v-else>
       <h4>You submitted successfully!</h4>
-      <button class="btn btn-success" @click="newCompany">Add</button>
     </div>
   </div>
 </template>
@@ -98,6 +97,7 @@ export default {
           this.company.id = response.data.id;
           console.log(response.data);
           this.submitted = true;
+          this.$router.push({ name: "companys" });
         })
         .catch(e => {
           console.log(e);

@@ -3,8 +3,8 @@ import { createWebHistory, createRouter } from "vue-router";
 const routes = [
   {
     path: "/admin",
-    alias: "/company",
-    name: "company",
+    alias: "/companys",
+    name: "companys",
     component: () => import("./components/Companys/CompanyList.vue")
   },
   {
