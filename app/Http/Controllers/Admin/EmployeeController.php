@@ -19,7 +19,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return Employee::paginate(Constants::DEFAULT_PER_PAGE);
+        return Employee::with('company')->paginate(Constants::DEFAULT_PER_PAGE);
     }
 
     /**
@@ -63,6 +63,8 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
+        
+        
         return ApiHelper::apiResponse(Constants::HTTP_RESPONSE_SUCCESSFULLY, null, $employee);
     }
 

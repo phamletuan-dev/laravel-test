@@ -33,6 +33,12 @@
         </select>
       </div>
 
+      <p v-if="errors">
+        <ul>
+          <li style="color:red" v-for="error in errors">{{ error[0] }}</li>
+        </ul>
+      </p>
+
     <button class="badge badge-danger mr-2"
       @click="deleteEmployee"
     >
@@ -62,7 +68,8 @@ export default {
     return {
       companys:[],
       currentEmployee: null,
-      message: ''
+      message: '',
+      errors: [],
     };
   },
   created() {
@@ -92,17 +99,16 @@ export default {
       console.log(this.currentEmployee);
       EmployeeDataService.update(this.currentEmployee.id, this.currentEmployee)
         .then(response => {
-          this.message = 'The tutorial was updated successfully!';
+          this.message = 'The employee was updated successfully!';
         })
         .catch(e => {
-          console.log(e);
+            this.errors = e.response.data.errors;
         });
     },
 
     deleteEmployee() {
       EmployeeDataService.delete(this.currentEmployee.id)
         .then(response => {
-          console.log(response.data);
           this.$router.push({ name: "employees" });
         })
         .catch(e => {

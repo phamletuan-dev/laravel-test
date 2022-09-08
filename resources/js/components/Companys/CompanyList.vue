@@ -20,7 +20,10 @@
           <label><strong>Email:</strong></label> {{ currentCompany.email }}
         </div>
         <div>
-          <label><strong>Logo:</strong></label> <img width="150" height="150" v-bind:src="currentCompany.logo"/>
+          <label><strong>Logo:</strong></label>
+          <div v-if="currentCompany.logo">
+            <img  width="150" height="150" :src="currentCompany.logo"/>
+          </div>
         </div>
         <div>
           <label><strong>Website:</strong></label> {{ currentCompany.website }}

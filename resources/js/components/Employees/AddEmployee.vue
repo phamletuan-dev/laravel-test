@@ -59,6 +59,12 @@
         />
       </div>
 
+      <p v-if="errors">
+        <ul>
+          <li style="color:red" v-for="error in errors">{{ error[0] }}</li>
+        </ul>
+      </p>
+
       <button @click="saveEmployee" class="btn btn-success">Submit</button>
     </div>
 
@@ -84,6 +90,7 @@ export default {
         phone: "",
         company_id:""
       },
+      errors: [],
       submitted: false
     };
   },
@@ -91,18 +98,12 @@ export default {
     CompanyDataService.getAll()
         .then(response => {
           this.companys = response.data.data;
-          console.log(this.companys);
         })
         .catch(e => {
           console.log(e);
         });
   },
   methods: {
-    async retrieveCompanys() {
-      let xxx = await CompanyDataService.getAll()
-      console.log(xxx);
-    },
-
     saveEmployee() {
       var data = {
         first_name: this.employee.first_name,
@@ -111,16 +112,14 @@ export default {
         company_id: this.employee.company_id,
         phone: this.employee.phone
       };
-      console.log("data",data);
       EmployeeDataService.create(data)
         .then(response => {
           this.employee.id = response.data.id;
-          console.log(response.data);
           this.submitted = true;
           this.$router.push({ name: "employees" });
         })
         .catch(e => {
-          console.log(e);
+          this.errors = e.response.data.errors;
         });
     },
   }

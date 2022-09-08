@@ -17,10 +17,16 @@
       <div v-if="currentEmployee">
         <h4>Employee Information</h4>
         <div>
+          <label><strong>First name:</strong></label> {{ currentEmployee.first_name }}
+        </div>
+        <div>
+          <label><strong>Last name:</strong></label> {{ currentEmployee.last_name }}
+        </div>
+        <div>
           <label><strong>Email:</strong></label> {{ currentEmployee.email }}
         </div>
         <div>
-          <label><strong>Company:</strong></label> {{ currentEmployee.company_id }}
+          <label><strong>Company:</strong></label> {{ currentEmployee.company.name }}
         </div>
         <div>
           <label><strong>Phone:</strong></label> {{ currentEmployee.phone }}
@@ -52,7 +58,7 @@ export default {
       EmployeeDataService.getAll()
         .then(response => {
           this.employees = response.data.data;
-          console.log(this.employees);
+          console.log(response.data.data)
 
         })
         .catch(e => {
