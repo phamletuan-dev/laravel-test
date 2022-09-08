@@ -1,6 +1,5 @@
 <template>
   <div v-if="currentCompany" class="edit-form">
-    <h4>Tutorial</h4>
       <div class="form-group">
         <label for="name">Name</label>
         <input type="text" class="form-control" id="name"
@@ -26,6 +25,12 @@
           v-model="currentCompany.website"
         />
       </div>
+
+      <p v-if="errors">
+        <ul>
+          <li style="color:red" v-for="error in errors">{{ error[0] }}</li>
+        </ul>
+      </p>
 
     <button class="badge badge-danger mr-2"
       @click="deleteTutorial"
@@ -55,6 +60,7 @@ export default {
   data() {
     return {
       currentCompany: null,
+      errors: [],
       message: ''
     };
   },
@@ -78,13 +84,14 @@ export default {
 
     updateTutorial() {
       this.currentCompany['_method'] = 'put';
-      
+      this.errors = [];
+
       CompanyDataService.update(this.currentCompany.id, this.currentCompany)
         .then(response => {
           this.message = 'The tutorial was updated successfully!';
         })
         .catch(e => {
-          console.log(e);
+          this.errors = e.response.data.errors;
         });
     },
 

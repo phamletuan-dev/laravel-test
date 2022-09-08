@@ -51,6 +51,12 @@
         />
       </div>
 
+      <p v-if="errors">
+        <ul>
+          <li style="color:red" v-for="error in errors">{{ error[0] }}</li>
+        </ul>
+      </p>
+
       <button @click="saveCompany" class="btn btn-success">Submit</button>
     </div>
 
@@ -74,6 +80,7 @@ export default {
         logo: "",
         website: ""
       },
+      errors: [],
       submitted: false
     };
   },
@@ -91,17 +98,17 @@ export default {
         logo: this.company.logo,
         website: this.company.website
       };
-      
+
+      this.errors = [];
+
       CompanyDataService.create(data)
         .then(response => {
-          console.log("data",data);
           this.company.id = response.data.id;
-          console.log(response.data);
           this.submitted = true;
           this.$router.push({ name: "companys" });
         })
         .catch(e => {
-          console.log(e);
+          this.errors = e.response.data.errors;
         });
     },
     
