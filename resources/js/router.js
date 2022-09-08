@@ -16,6 +16,21 @@ const routes = [
     path: "/add-company",
     name: "add-company",
     component: () => import("./components/Companys/AddCompany.vue")
+  },
+  {
+    path: "/employees",
+    name: "employees",
+    component: () => import("./components/Employees/EmployeeList.vue")
+  },
+  // {
+  //   path: "/employee/:id",
+  //   name: "employee-details",
+  //   component: () => import("./components/Employees/Employee.vue")
+  // },
+  {
+    path: "/add-employee",
+    name: "add-employee",
+    component: () => import("./components/Employees/AddEmployee.vue")
   }
 ];
 

@@ -14,7 +14,7 @@ class CompanyDataService {
   }
 
   update(id, data) {
-    return http.put(`/company/${id}`, data);
+    return http.post(`/company/${id}`, data);
   }
 
   delete(id) {

@@ -7,7 +7,7 @@
           :class="{ active: index == currentIndex }"
           v-for="(company, index) in companys"
           :key="index"
-          @click="setActiveTutorial(company, index)"
+          @click="setActiveCompany(company, index)"
         >
           {{ company.name }}
         </li>
@@ -20,7 +20,7 @@
           <label><strong>Email:</strong></label> {{ currentCompany.email }}
         </div>
         <div>
-          <label><strong>Logo:</strong></label> <img v-bind:src="currentCompany.logo"/>
+          <label><strong>Logo:</strong></label> <img width="150" height="150" v-bind:src="currentCompany.logo"/>
         </div>
         <div>
           <label><strong>Website:</strong></label> {{ currentCompany.website }}
@@ -66,20 +66,9 @@ export default {
       this.currentIndex = -1;
     },
 
-    setActiveTutorial(company, index) {
+    setActiveCompany(company, index) {
       this.currentCompany = company;
       this.currentIndex = company ? index : -1;
-    },
-
-    removeAllTutorials() {
-      TutorialDataService.deleteAll()
-        .then(response => {
-          console.log(response.data);
-          this.refreshList();
-        })
-        .catch(e => {
-          console.log(e);
-        });
     },
     
   },

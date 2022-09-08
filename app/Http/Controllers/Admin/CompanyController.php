@@ -111,13 +111,13 @@ class CompanyController extends Controller
         $currentTime = Carbon::now()->timestamp;
         $logopath = null;
 
-        if ($request->logo) {
+        if ($request->logo && !is_string($request->logo)) {
             $logopath =  Constants::LOGO_FILE_PATH . $currentTime . '_' . $request->logo->getClientOriginalName();
         }
 
         DB::beginTransaction();
         try {
-            if ($request->logo) {
+            if ($request->logo  && !is_string($request->logo)) {
                 Storage::disk('public')->put($logopath, file_get_contents($request->logo->getRealPath()));
                 Storage::disk('public')->delete([ApiHelper::removeDomainFromlink($company->logo)]);
             }
