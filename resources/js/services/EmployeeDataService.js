@@ -14,7 +14,7 @@ class EmployeeDataService {
   }
 
   update(id, data) {
-    return http.put(`/employee/${id}`, data);
+    return http.post(`/employee/${id}`, data);
   }
 
   delete(id) {

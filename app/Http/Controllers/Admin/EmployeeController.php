@@ -40,7 +40,7 @@ class EmployeeController extends Controller
      */
     public function store(EmployeeRequest $request)
     {
-        if (Company::where('id', $request->company_id )->exists()) {
+        if (!Company::where('id', $request->company_id)->exists()) {
             return ApiHelper::apiResponse(Constants::HTTP_RESPONSE_NOT_FOUND, 'Company not found!', null);
         }
 
@@ -86,7 +86,7 @@ class EmployeeController extends Controller
      */
     public function update(EmployeeRequest $request, Employee $employee)
     {
-        if (!Company::where('id', $request->company_id )->exists()) {
+        if (!Company::where('id', $request->company_id)->exists()) {
             return ApiHelper::apiResponse(Constants::HTTP_RESPONSE_NOT_FOUND, 'Company not found!', null);
         }
 

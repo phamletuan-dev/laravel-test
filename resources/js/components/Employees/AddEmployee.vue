@@ -41,14 +41,10 @@
       <!-- Company -->
       <div class="form-group">
         <label for="Email">Company</label>
-        <input
-          type="text"
-          class="form-control"
-          id="company_id"
-          required
-          v-model="employee.company_id"
-          name="company_id"
-        />
+        <select class="form-control" id="company_id" name="company_id" v-model="employee.company_id">
+          <option :value="company.id"  v-for="(company, index) in companys"
+          :key="index">{{ company.name }}</option>
+        </select>
       </div>
       <!-- Phone -->
       <div class="form-group">
@@ -74,11 +70,12 @@
 
 <script>
 import EmployeeDataService from '../../services/EmployeeDataService';
-
+import CompanyDataService from '../../services/CompanyDataService';
 export default {
   name: "add-employee",
   data() {
     return {
+      companys: [],
       employee: {
         id: null,
         first_name: "",
@@ -90,9 +87,23 @@ export default {
       submitted: false
     };
   },
+  created() {
+    CompanyDataService.getAll()
+        .then(response => {
+          this.companys = response.data.data;
+          console.log(this.companys);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+  },
   methods: {
+    async retrieveCompanys() {
+      let xxx = await CompanyDataService.getAll()
+      console.log(xxx);
+    },
+
     saveEmployee() {
-      
       var data = {
         first_name: this.employee.first_name,
         last_name: this.employee.last_name,
@@ -112,7 +123,6 @@ export default {
           console.log(e);
         });
     },
-    
   }
 };
 </script>

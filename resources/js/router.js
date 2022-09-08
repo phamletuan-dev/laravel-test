@@ -22,11 +22,11 @@ const routes = [
     name: "employees",
     component: () => import("./components/Employees/EmployeeList.vue")
   },
-  // {
-  //   path: "/employee/:id",
-  //   name: "employee-details",
-  //   component: () => import("./components/Employees/Employee.vue")
-  // },
+  {
+    path: "/employee/:id",
+    name: "employee-details",
+    component: () => import("./components/Employees/UpdateEmployee.vue")
+  },
   {
     path: "/add-employee",
     name: "add-employee",
