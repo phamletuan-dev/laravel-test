@@ -92,16 +92,16 @@ export default {
         });
     },
 
-    // deleteTutorial() {
-    //   TutorialDataService.delete(this.currentTutorial.id)
-    //     .then(response => {
-    //       console.log(response.data);
-    //       this.$router.push({ name: "tutorials" });
-    //     })
-    //     .catch(e => {
-    //       console.log(e);
-    //     });
-    // }
+    deleteTutorial() {
+      CompanyDataService.delete(this.currentCompany.id)
+        .then(response => {
+          console.log(response.data);
+          this.$router.push({ name: "companys" });
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
   },
   mounted() {
     this.message = '';

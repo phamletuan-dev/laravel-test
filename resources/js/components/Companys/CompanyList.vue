@@ -13,15 +13,14 @@
         </li>
       </ul>
     </div>
-    <br>
-    <div class="col-md-6">
+    <div class="col-md-6 mt-4">
       <div v-if="currentCompany">
         <h4>Company Information</h4>
         <div>
           <label><strong>Email:</strong></label> {{ currentCompany.email }}
         </div>
         <div>
-          <label><strong>Logo:</strong></label> {{ currentCompany.logo }}
+          <label><strong>Logo:</strong></label> <img v-bind:src="currentCompany.logo"/>
         </div>
         <div>
           <label><strong>Website:</strong></label> {{ currentCompany.website }}
@@ -40,7 +39,7 @@
 import CompanyDataService from "../../services/CompanyDataService";
 
 export default {
-  name: "tutorials-list",
+  name: "comapanys-list",
   data() {
     return {
       companys: [],
@@ -53,7 +52,7 @@ export default {
       CompanyDataService.getAll()
         .then(response => {
           this.companys = response.data.data;
-          console.log(this.tutorials);
+          console.log(this.companys);
 
         })
         .catch(e => {
@@ -83,17 +82,6 @@ export default {
         });
     },
     
-    searchTitle() {
-      TutorialDataService.findByTitle(this.title)
-        .then(response => {
-          this.tutorials = response.data;
-          this.setActiveTutorial(null);
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    }
   },
   mounted() {
     this.retrieveCompanys();
