@@ -94,6 +94,7 @@ export default {
       
       CompanyDataService.create(data)
         .then(response => {
+          console.log("data",data);
           this.company.id = response.data.id;
           console.log(response.data);
           this.submitted = true;

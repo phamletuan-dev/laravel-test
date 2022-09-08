@@ -1,10 +1,9 @@
 <template>
   <div v-if="currentCompany" class="edit-form">
     <h4>Tutorial</h4>
-    <form>
       <div class="form-group">
         <label for="name">Name</label>
-        <input type="text" class="form-control" id="Name"
+        <input type="text" class="form-control" id="name"
           v-model="currentCompany.name"
         />
       </div>
@@ -17,9 +16,10 @@
       <div class="form-group">
         <label for="email">Logo</label>
         <input  type="file" class="form-control-file" id="logo"
-          v-on:change="onFileChange"
+          v-on:change="onFileChange" 
         />
       </div>
+      <img width="150" height="150" v-bind:src="currentCompany.logo"/>
       <div class="form-group">
         <label for="website">Website</label>
         <input type="text" class="form-control" id="website"
@@ -27,16 +27,13 @@
         />
       </div>
 
-    </form>
-
-
     <button class="badge badge-danger mr-2"
       @click="deleteTutorial"
     >
       Delete
     </button>
 
-    <button type="submit" class="badge badge-success"
+    <button class="badge badge-success"
       @click="updateTutorial"
     >
       Update
@@ -54,7 +51,7 @@
 import CompanyDataService from "../../services/CompanyDataService";
 
 export default {
-  name: "tutorial",
+  name: "company",
   data() {
     return {
       currentCompany: null,
@@ -80,11 +77,10 @@ export default {
     },
 
     updateTutorial() {
-      console.log(this.currentCompany);
-      CompanyDataService.update(this.currentCompany.id, this.currentCompany)
+      this.currentCompany['_method'] = 'put';
       
+      CompanyDataService.update(this.currentCompany.id, this.currentCompany)
         .then(response => {
-          console.log(response.data);
           this.message = 'The tutorial was updated successfully!';
         })
         .catch(e => {
